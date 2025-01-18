@@ -8,7 +8,7 @@ export default function CallbackRoute() {
 
       await auth0.handleRedirectCallback();
       const user = await auth0.getUser();
-      console.log(user);
+      console.log("user: ", user);
     };
 
     handleRedirect();
