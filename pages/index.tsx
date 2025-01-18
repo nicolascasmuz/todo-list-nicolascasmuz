@@ -1,7 +1,10 @@
 import { useEffect } from "react";
 import { getAuth0Client } from "lib/auth0";
+import { useLogin } from "state/hooks/useLogin";
 
 export default function Home() {
+  const login = useLogin();
+
   useEffect(() => {
     const setupLogin = async () => {
       const auth0 = await getAuth0Client();
@@ -13,26 +16,16 @@ export default function Home() {
         try {
           await auth0.handleRedirectCallback();
           const user = await auth0.getUser();
-          console.log("Usuario autenticado:", user);
+          console.log("user: ", user);
 
-          window.history.replaceState(
-            {},
-            document.title,
-            window.location.pathname
-          );
+          const userData = {
+            email: user.email,
+            nickname: user.nickname,
+            picture: user.picture,
+            updated_at: user.updated_at,
+          };
 
-          await fetch("http://localhost:8080/api/auth", {
-            method: "POST",
-            headers: {
-              "content-type": "application/json",
-            },
-            body: JSON.stringify({
-              email: user.email,
-              nickname: user.nickname,
-              picture: user.picture,
-              updated_at: user.updated_at,
-            }),
-          });
+          login(userData);
         } catch (error) {
           console.error(
             "Error procesando el redireccionamiento de Auth0:",
@@ -42,7 +35,11 @@ export default function Home() {
       }
 
       document.getElementById("login")?.addEventListener("click", async () => {
-        await auth0.loginWithRedirect();
+        await auth0.loginWithRedirect({
+          authorizationParams: {
+            redirect_uri: "http://localhost:3000/dashboard",
+          },
+        });
       });
     };
 
