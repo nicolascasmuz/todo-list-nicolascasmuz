@@ -8,13 +8,21 @@ export async function fetchAPI(input: RequestInfo, options?) {
     const response = await fetch(url, options);
     res = response;
   }
+  if (input == "/todos" && options?.method == "POST") {
+    const response = await fetch(url, options);
+    res = response;
+  }
+  if (input == "/todos" && options?.method == "GET") {
+    const response = await fetch(url, options);
+    res = response;
+  }
 
   if (res.status >= 200 && res.status < 300) {
     const data = await res.json();
     localStorage.setItem("user-data", JSON.stringify(data));
     return data;
   } else {
-    throw new Error(`Hubo un error ${res.status}: ${res.statusText}`);
+    throw new Error(`${res.status}: ${res.statusText}`);
   }
 }
 
@@ -27,6 +35,31 @@ export async function login(userData: object) {
       },
       body: JSON.stringify(userData),
     });
+  }
+}
+
+export async function createTask(taskData: object) {
+  if (taskData) {
+    await fetchAPI("/todos", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(taskData),
+    });
+  }
+}
+
+export async function getTasks(email: string) {
+  if (email) {
+    const tasks = await fetchAPI("/todos", {
+      method: "GET",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({ email }),
+    });
+    return tasks;
   }
 }
 

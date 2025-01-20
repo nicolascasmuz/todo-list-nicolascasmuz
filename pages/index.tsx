@@ -1,10 +1,10 @@
 import Layout from "components/layout";
 import Login from "./login";
+import { useData } from "lib/hooks";
+import Dashboard from "./dashboard";
 
 export default function Home() {
-  return (
-    <Layout>
-      <Login />
-    </Layout>
-  );
+  const userData = useData();
+
+  return <Layout>{userData ? <Dashboard /> : <Login />}</Layout>;
 }

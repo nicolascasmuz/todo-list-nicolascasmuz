@@ -1,9 +1,22 @@
+import { useState, useEffect } from "react";
 import useSWR from "swr";
 import useSWRImmutable from "swr";
 import { fetchAPI } from "./api";
 
-export function useMe() {
-  const { data, error } = useSWR("/me", fetchAPI);
+export function useData() {
+  const [data, setData] = useState(null);
+
+  useEffect(() => {
+    const userData = localStorage.getItem("user-data");
+    const parsedUserData = JSON.parse(userData);
+    setData(parsedUserData);
+  }, []);
+
+  return data;
+}
+
+/* export function useTasks(productID: string) {
+  const { data, error } = useSWRImmutable("/todos", fetchAPI);
 
   if (error) {
     console.error(error);
@@ -11,15 +24,4 @@ export function useMe() {
   }
 
   return data;
-}
-
-export function useProduct(productID: string) {
-  const { data, error } = useSWRImmutable(`/products/${productID}`, fetchAPI);
-
-  if (error) {
-    console.error(error);
-    return null;
-  }
-
-  return data;
-}
+} */

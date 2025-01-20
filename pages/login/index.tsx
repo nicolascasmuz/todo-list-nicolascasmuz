@@ -17,8 +17,10 @@ const Login: NextPage = () => {
 
   return (
     <section className={styles["general-container"]}>
-      <MyTasksLogo />
-      <LoginButton onClick={HandleClick}>Click to Login</LoginButton>
+      <MyTasksLogo height={"250px"} />
+      <LoginButton onClick={HandleClick} variant="contained" color="secondary">
+        Click to Login
+      </LoginButton>
     </section>
   );
 };

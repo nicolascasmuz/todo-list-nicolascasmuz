@@ -1,9 +1,15 @@
 import Button from "@mui/material/Button";
 
-export function LoginButton({ children, onClick }: any) {
+export function LoginButton(props) {
   return (
-    <Button variant="contained" onClick={onClick}>
-      {children}
+    <Button
+      variant={props.variant}
+      color={props.color}
+      size={props.size}
+      type={props.type}
+      onClick={props.onClick}
+    >
+      {props.children}
     </Button>
   );
 }

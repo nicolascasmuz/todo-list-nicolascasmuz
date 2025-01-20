@@ -1,0 +1,22 @@
+.dashboard__general-container {
+  font-family: "Montserrat";
+}
+
+.dashboard__input {
+  font-family: "Montserrat";
+  min-width: 250px;
+  background-color: #fafafa;
+  border-radius: 10px;
+  height: 35px;
+  color: #080808;
+}
+
+.dashboard__task-div {
+  display: flex;
+  justify-content: space-between;
+  min-width: 550px;
+  background-color: #fafafa;
+  border-radius: 10px;
+  height: 35px;
+  color: #080808;
+}
