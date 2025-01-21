@@ -19,7 +19,6 @@ export async function fetchAPI(input: RequestInfo, options?) {
 
   if (res.status >= 200 && res.status < 300) {
     const data = await res.json();
-    localStorage.setItem("user-data", JSON.stringify(data));
     return data;
   } else {
     throw new Error(`${res.status}: ${res.statusText}`);
@@ -28,13 +27,15 @@ export async function fetchAPI(input: RequestInfo, options?) {
 
 export async function login(userData: object) {
   if (userData) {
-    await fetchAPI("/auth", {
+    const data = await fetchAPI("/auth", {
       method: "POST",
       headers: {
         "content-type": "application/json",
       },
       body: JSON.stringify(userData),
     });
+    localStorage.setItem("user-data", JSON.stringify(data));
+    return data;
   }
 }
 

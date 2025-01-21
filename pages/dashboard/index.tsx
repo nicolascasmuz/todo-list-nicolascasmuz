@@ -2,7 +2,7 @@ import type { NextPage } from "next";
 import { useEffect } from "react";
 import { getAuth0Client } from "lib/auth0";
 import { createTask, login } from "lib/api";
-import { useData } from "lib/hooks";
+import { useUserData } from "lib/hooks";
 import styles from "./dashboard.module.css";
 import Layout from "components/layout";
 import { MyTasksLogo } from "ui/logo";
@@ -10,7 +10,7 @@ import { LoginButton } from "ui/buttons";
 import { v4 as uuidv4 } from "uuid";
 
 const Dashboard: NextPage = () => {
-  const userData = useData();
+  const userData = useUserData();
 
   useEffect(() => {
     const saveLogin = async () => {
@@ -24,14 +24,14 @@ const Dashboard: NextPage = () => {
           await auth0.handleRedirectCallback();
           const user = await auth0.getUser();
 
-          const userData = {
+          const userDataObj = {
             email: user.email,
             nickname: user.nickname,
             picture: user.picture,
             updated_at: user.updated_at,
           };
 
-          await login(userData);
+          await login(userDataObj);
 
           window.history.replaceState(
             {},
@@ -61,7 +61,7 @@ const Dashboard: NextPage = () => {
         tasks: [{ id: uuidv4().slice(32), task }],
       };
 
-      createTask(taskData);
+      await createTask(taskData);
     }
   };
 

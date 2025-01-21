@@ -5,7 +5,7 @@ import styles from "./login.module.css";
 import { LoginButton } from "ui/buttons";
 
 const Login: NextPage = () => {
-  const HandleClick = async (e) => {
+  const HandleClick = async () => {
     const auth0 = await getAuth0Client();
 
     await auth0.loginWithRedirect({

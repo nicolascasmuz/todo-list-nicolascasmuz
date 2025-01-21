@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import useSWR from "swr";
 import useSWRImmutable from "swr";
-import { fetchAPI } from "./api";
+import { fetchAPI, login } from "./api";
 
-export function useData() {
+export function useUserData() {
   const [data, setData] = useState(null);
 
   useEffect(() => {
